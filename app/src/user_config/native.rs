@@ -204,6 +204,12 @@ pub fn load_tab_configs(tab_config_path: &Path) -> (Vec<TabConfig>, Vec<TabConfi
             Err(error) => errors.push(error),
         }
     }
+    configs.sort_unstable_by(|a, b| {
+        a.name
+            .to_lowercase()
+            .cmp(&b.name.to_lowercase())
+            .then_with(|| a.name.cmp(&b.name))
+    });
     (configs, errors)
 }
 
